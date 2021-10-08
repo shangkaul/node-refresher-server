@@ -9,7 +9,7 @@ var fs = require('fs');
 // var Bcrypt = require('bcrypt'); // Encrypting /salting passwords
 
 const app= express();
-const port=8080;
+const port=4000;
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -17,23 +17,16 @@ app.use(express.urlencoded({
   extended: false
 }));
 app.use(methodOverride());
-app.use(
-    cors({
-      origin: "https://stupefied-payne-188c90.netlify.app/" // restrict calls to those this address
-    })
-  );
+app.use(cors());
 
 
-var con = mysql.createConnection({
+var con = mysql.createPool({
     host: "sql482.main-hosting.eu",
     user: "u191494829_shangkaul",
     password:"?6JVqN2F6Rq",
    database:"u191494829_sql_playground",
- 
   });
-  con.connect((err)=> {
-    if (err) throw err;
-    console.log("Connected!");})
+  
 
 app.get('/',(req,res)=>{
     console.log("/ hit GET")
@@ -110,6 +103,6 @@ app.post('/del',(req,res)=>{
               });
     });
 app.timeout = 0;
-app.listen(process.env.PORT||port,()=>{
-    console.log("Server running at localhost:"+port)
+app.listen(2020, () => {
+  console.log('server started');
 });
